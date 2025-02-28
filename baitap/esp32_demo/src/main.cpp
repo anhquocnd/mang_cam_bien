@@ -1,21 +1,23 @@
-#include <Arduino.h>
+#include"DHT.h"
+#include"Arduino.h"
 
-#define LED 5
-#define BUTTON 4
+#define DHTPIN 32
+#define DHTTYPE DHT11
 
-int buttonState;
+DHT dht(DHTPIN, DHTTYPE);
 
-void setup() {
-  pinMode(LED, OUTPUT);
-  pinMode(BUTTON, INPUT);
-
-  digitalWrite(LED,LOW);
+void setup(){
+  Serial.begin(9600);
+  dht.begin();
+  
 }
-
-void loop() {
-
-    digitalWrite(LED,1);
-  delay (100);
-    digitalWrite(LED,0);
-  delay(100);
+void loop(){
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+   Serial.print("Nhiệt độ:");
+   Serial.print(t);
+   Serial.print("°C");
+   Serial.print(h);
+   Serial.print(" %");
+   delay(1000);
 }
